@@ -1,5 +1,12 @@
 ---
-# optional
+
+deploy_rhelai_enabled: true  # Whether to deploy a VM before running tests
+deploy_rhelai_cleanup_enabled: true  # Whether to clean up the VM after running tests
+# [string]: Repo for deployment roles
+deploy_rhelai_repo: https://github.com/openstack-k8s-operators/rhoso-rhelai.git
+# [string]: Branch for deployment roles checkout
+deploy_rhelai_branch: csibbitt/OSPRH-13751_cleanup_ansible_task
+
 # [string]: DNS server to inject into /etc/resolv.conf
 dns_server: 192.168.122.1
 # [dict] The PCI Device ID and the number of devices expected
