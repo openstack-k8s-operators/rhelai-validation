@@ -1,5 +1,13 @@
 ---
-- name: RHEL AI Validation Playbook
+- name: RHELAI image deployment
+  hosts: control_node
+  gather_facts: false
+  tasks:
+    - name: RHELAI VM deployment
+      when: deploy_rhelai_enabled | bool
+      ansible.builtin.import_tasks: tasks/deploy_vm.yaml
+
+- name: RHEL AI Validation
   hosts: target_nodes
   gather_facts: false
   tasks:
@@ -16,3 +24,13 @@
     - name: Cleanup
       become: true
       ansible.builtin.import_tasks: tasks/cleanup.yaml
+
+- name: RHELAI VM cleanup
+  hosts: control_node
+  gather_facts: false
+  tasks:
+    - name: Run cleanup_rhelai from setup_rhelai Role
+      when: deploy_rhelai_cleanup_enabled | bool
+      ansible.builtin.include_role:
+        name: "{{ deploy_rhelai_setup_roledir | default('.') }}"
+        tasks_from: cleanup_rhelai.yml

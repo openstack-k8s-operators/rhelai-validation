@@ -1,0 +1,25 @@
+---
+- name: Git checkout the rhoso-rhelai roles
+  ansible.builtin.git:
+    repo: "{{ deploy_rhelai_repo }}"
+    dest: "{{ lookup('env', 'HOME') }}/rhoso-rhelai"
+    version: "{{ deploy_rhelai_branch }}"
+- name: Set rhoso-rhelai role paths
+  ansible.builtin.set_fact:
+    deploy_rhelai_gpu_roledir: "{{ lookup('env', 'HOME') }}/rhoso-rhelai/nested-passthrough/ansible/setup_gpu"
+    deploy_rhelai_setup_roledir: "{{ lookup('env', 'HOME') }}/rhoso-rhelai/nested-passthrough/ansible/setup_rhelai"
+
+- name: Collect GPU facts required for RHELAI deployment
+  ansible.builtin.include_role:
+    name: "{{ deploy_rhelai_gpu_roledir }}"
+    tasks_from: gpuinfo.yml
+- name: Copy oclogin script for use by deploy_rhelai tasks
+  ansible.builtin.copy:
+    src: "{{ deploy_rhelai_setup_roledir }}/files/oclogin"
+    dest: ~/oclogin
+    mode: "0600"
+
+- name: Hand off to deploy_rhelai from setup_rhelai Role
+  ansible.builtin.include_role:
+    name: "{{ deploy_rhelai_setup_roledir }}"
+    tasks_from: deploy_rhelai.yml
