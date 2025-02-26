@@ -1,11 +1,13 @@
 ---
-
 deploy_rhelai_enabled: true  # Whether to deploy a VM before running tests
-deploy_rhelai_cleanup_enabled: true  # Whether to clean up the VM after running tests
-# [string]: Repo for deployment roles
-deploy_rhelai_repo: https://github.com/openstack-k8s-operators/rhoso-rhelai.git
-# [string]: Branch for deployment roles checkout
-deploy_rhelai_branch: csibbitt/OSPRH-13751_cleanup_ansible_task
+deploy_rhelai_vm_name: rhel-ai  # Name of the VM to create and destroy
+deploy_rhelai_image_name: rhel-ai  # Image to use when creating the VM
+deploy_rhelai_flavor: nvidia  # Flavor to use when creating the VM
+deploy_rhelai_floating_ip: 192.168.122.222  # Floating IP to assign to the VM
+deploy_rhelai_private_key_file: ~/.ssh/rhel-ai.pem  # WARNING Where to (over-)write the ssh key. Must match path in inventory
+deploy_rhelai_pre_cleanup_enabled: true  # Whether to clean up the VM before running tests
+deploy_rhelai_post_cleanup_enabled: false  # Whether to clean up the VM after running tests
+deploy_rhelai_openstack_command: oc rsh openstackclient openstack  # Set to "openstack" if it's available locally
 
 # [string]: DNS server to inject into /etc/resolv.conf
 dns_server: 192.168.122.1

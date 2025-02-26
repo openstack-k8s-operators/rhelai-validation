@@ -1,25 +1,40 @@
 ---
-- name: Git checkout the rhoso-rhelai roles
-  ansible.builtin.git:
-    repo: "{{ deploy_rhelai_repo }}"
-    dest: "{{ lookup('env', 'HOME') }}/rhoso-rhelai"
-    version: "{{ deploy_rhelai_branch }}"
-- name: Set rhoso-rhelai role paths
-  ansible.builtin.set_fact:
-    deploy_rhelai_gpu_roledir: "{{ lookup('env', 'HOME') }}/rhoso-rhelai/nested-passthrough/ansible/setup_gpu"
-    deploy_rhelai_setup_roledir: "{{ lookup('env', 'HOME') }}/rhoso-rhelai/nested-passthrough/ansible/setup_rhelai"
+- name: Create openstack keypair for {{ deploy_rhelai_vm_name }}
+  ansible.builtin.command: "{{ deploy_rhelai_openstack_command }} --insecure keypair create {{ deploy_rhelai_vm_name }}"
+  environment:
+    OS_CLOUD: default
+  no_log: true
+  register: output
+  changed_when: true
 
-- name: Collect GPU facts required for RHELAI deployment
-  ansible.builtin.include_role:
-    name: "{{ deploy_rhelai_gpu_roledir }}"
-    tasks_from: gpuinfo.yml
-- name: Copy oclogin script for use by deploy_rhelai tasks
+- name: Write ssh key to file for {{ deploy_rhelai_vm_name }}
   ansible.builtin.copy:
-    src: "{{ deploy_rhelai_setup_roledir }}/files/oclogin"
-    dest: ~/oclogin
+    content: "{{ output.stdout }}\n"
+    dest: "{{ deploy_rhelai_private_key_file }}"
     mode: "0600"
 
-- name: Hand off to deploy_rhelai from setup_rhelai Role
-  ansible.builtin.include_role:
-    name: "{{ deploy_rhelai_setup_roledir }}"
-    tasks_from: deploy_rhelai.yml
+- name: Create VM {{ deploy_rhelai_vm_name }}
+  ansible.builtin.command: |
+    {{ deploy_rhelai_openstack_command }} --insecure server create --flavor nvidia \
+    --image {{ deploy_rhelai_image_name }} --key-name {{ deploy_rhelai_vm_name }} \
+    --nic net-id=private {{ deploy_rhelai_vm_name }} --security-group basic --wait
+  environment:
+    OS_CLOUD: default
+  changed_when: true
+
+- name: Add floating IP to {{ deploy_rhelai_vm_name }}
+  ansible.builtin.command: |
+    {{ deploy_rhelai_openstack_command }} --insecure server add floating ip {{ deploy_rhelai_image_name }} {{ deploy_rhelai_floating_ip }}
+  environment:
+    OS_CLOUD: default
+  changed_when: true
+
+- name: Poll for SSH to be available on {{ deploy_rhelai_vm_name }}
+  ansible.builtin.command: |
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+    -i {{ deploy_rhelai_private_key_file }} cloud-user@{{ deploy_rhelai_floating_ip }}
+  retries: 60  # 60 * 10 = 10 mins
+  delay: 10
+  register: result
+  until: result.rc == 0
+  changed_when: false

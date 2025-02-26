@@ -1,0 +1,14 @@
+---
+- name: Delete VM {{ deploy_rhelai_vm_name }}
+  ansible.builtin.command: "{{ deploy_rhelai_openstack_command }} --insecure server delete {{ deploy_rhelai_vm_name }}"
+  environment:
+    OS_CLOUD: default
+  changed_when: true
+  failed_when: false
+
+- name: Delete openstack keypair for {{ deploy_rhelai_vm_name }}
+  ansible.builtin.command: "{{ deploy_rhelai_openstack_command }} --insecure keypair delete {{ deploy_rhelai_vm_name }}"
+  environment:
+    OS_CLOUD: default
+  changed_when: true
+  failed_when: false
