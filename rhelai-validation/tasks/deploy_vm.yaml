@@ -15,7 +15,7 @@
 
 - name: Create VM {{ deploy_rhelai_vm_name }}
   ansible.builtin.command: |
-    {{ deploy_rhelai_openstack_command }} --insecure server create --flavor nvidia \
+    {{ deploy_rhelai_openstack_command }} --insecure server create --flavor {{ deploy_rhelai_flavor }}\
     --image {{ deploy_rhelai_image_name }} --key-name {{ deploy_rhelai_vm_name }} \
     --nic net-id=private {{ deploy_rhelai_vm_name }} --security-group basic --wait
   environment:
