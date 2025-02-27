@@ -1,5 +1,5 @@
 ---
-- name: RHELAI VM setup
+- name: RHEL AI VM setup
   hosts: control_node
   gather_facts: false
   tasks:
@@ -33,7 +33,7 @@
       become: true
       ansible.builtin.import_tasks: tasks/cleanup.yaml
 
-- name: RHELAI VM post-cleanup
+- name: RHEL AI VM post-cleanup
   hosts: control_node
   gather_facts: false
   tasks:

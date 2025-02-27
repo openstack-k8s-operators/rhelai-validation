@@ -1,15 +1,24 @@
 ---
-deploy_rhelai_enabled: true  # Whether to deploy a VM before running tests
-deploy_rhelai_vm_name: rhel-ai  # Name of the VM to create and destroy
-deploy_rhelai_image_name: rhel-ai  # Image to use when creating the VM
-deploy_rhelai_flavor: nvidia  # Flavor to use when creating the VM
-deploy_rhelai_floating_ip: 192.168.122.222  # Floating IP to assign to the VM
-deploy_rhelai_private_key_file: ~/.ssh/rhel-ai.pem  # WARNING Where to (over-)write the ssh key. Must match path in inventory
-deploy_rhelai_pre_cleanup_enabled: true  # Whether to clean up the VM before running tests
-deploy_rhelai_post_cleanup_enabled: false  # Whether to clean up the VM after running tests
-deploy_rhelai_openstack_command: oc rsh openstackclient openstack  # Set to "openstack" if it's available locally
+# [bool] Whether to deploy a VM before running tests
+deploy_rhelai_enabled: true
+# [string] Name of the VM to create and destroy
+deploy_rhelai_vm_name: rhel-ai
+# [string] Image to use when creating the VM
+deploy_rhelai_image_name: rhel-ai
+# [string] Flavor to use when creating the VM
+deploy_rhelai_flavor: nvidia
+# [string] Floating IP to assign to the VM
+deploy_rhelai_floating_ip: 192.168.122.222
+# [string] WARNING Where to (over-)write the ssh key. Must match path in inventory
+deploy_rhelai_private_key_file: ~/.ssh/rhel-ai.pem
+# [bool] Whether to clean up the VM before running tests
+deploy_rhelai_pre_cleanup_enabled: true
+# [bool] Whether to clean up the VM after running tests
+deploy_rhelai_post_cleanup_enabled: false
+# [string] Set to "openstack" if it's available locally
+deploy_rhelai_openstack_command: oc rsh openstackclient openstack
 
-# [string]: DNS server to inject into /etc/resolv.conf
+# [string] DNS server to inject into /etc/resolv.conf
 dns_server: 192.168.122.1
 # [dict] The PCI Device ID and the number of devices expected
 pci_devices:
@@ -27,7 +36,7 @@ model_download_registry_password:
 model_download_release: latest  # Set to '' for TinyLlama
 model_download_repository_base: docker://registry.redhat.io/rhelai1/  # Set to '' if downloading from HuggingFace
 model_path_base: /var/home/cloud-user/.cache/instructlab/models/
-# [float]: Performance threshholds
+# [float] Performance threshholds
 model_perf_max_avg_time_per_tok: !!float "0.03"
 model_perf_max_avg_time_to_first_tok: !!float "0.3"
 
