@@ -1,0 +1,16 @@
+---
+- name: RHEL AI VM setup
+  when: deploy_rhelai_enabled | bool
+  block:
+    - name: Install python-openstackclient
+      ansible.builtin.pip:
+        name: python-openstackclient
+      become: true
+      when: deploy_rhelai_openstack_command == "openstack"
+
+    - name: VM Cleanup (Pre)
+      ansible.builtin.import_tasks: vm_cleanup.yaml
+      when: deploy_rhelai_pre_cleanup_enabled | bool
+
+    - name: VM Deploy
+      ansible.builtin.import_tasks: vm_deploy.yaml

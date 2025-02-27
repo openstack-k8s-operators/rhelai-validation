@@ -1,0 +1,4 @@
+---
+- name: VM Cleanup (Post)
+  ansible.builtin.import_tasks: vm_cleanup.yaml
+  when: deploy_rhelai_enabled | bool and deploy_rhelai_post_cleanup_enabled | bool

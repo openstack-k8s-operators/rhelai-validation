@@ -9,6 +9,7 @@
 
 - name: Install pciutils package
   ansible.builtin.dnf:
+    use_backend: dnf4
     name: pciutils
     state: present
 
@@ -26,6 +27,6 @@
 
 - name: Copy scripts from local to RHEL AI machine
   ansible.builtin.copy:
-    src: "{{ playbook_dir }}/scripts"
+    src: "{{ role_path }}/files/scripts"
     dest: /tmp
     mode: "1777"
