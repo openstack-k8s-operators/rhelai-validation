@@ -16,7 +16,7 @@ deploy_rhelai_pre_cleanup_enabled: true
 # [bool] Whether to clean up the VM after running tests
 deploy_rhelai_post_cleanup_enabled: false
 # [string] Set to "openstack" if it's available locally
-deploy_rhelai_openstack_command: oc rsh openstackclient openstack
+deploy_rhelai_openstack_command: openstack
 
 # [string] DNS server to inject into /etc/resolv.conf
 dns_server: 192.168.122.1

@@ -27,6 +27,6 @@
 
 - name: Copy scripts from local to RHEL AI machine
   ansible.builtin.copy:
-    src: "{{ playbook_dir }}/scripts"
+    src: "{{ role_path }}/files/scripts"
     dest: /tmp
     mode: "1777"

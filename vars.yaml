@@ -1,0 +1,3 @@
+---
+# For when you have `oc` access to RHOSO, but no working `openstack` client installed
+deploy_rhelai_openstack_command: oc rsh openstackclient openstack

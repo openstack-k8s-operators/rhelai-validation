@@ -1,0 +1,33 @@
+---
+apiVersion: test.openstack.org/v1beta1
+kind: AnsibleTest
+metadata:
+  name: rhel-ai-validation-ansibletest
+  namespace: openstack
+spec:
+  ansibleGitRepo: https://github.com/openstack-k8s-operators/rhelai-validation.git
+  # yamllint disable rule:line-length
+  ansibleInventory: |
+    [control_node]
+    localhost ansible_connection=local
+    [target_nodes]
+    rhelai0 ansible_host=192.168.122.222 ansible_user=cloud-user ansible_ssh_private_key_file=~/rhel-ai.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+  # yamllint enable rule:line-length
+  ansiblePlaybookPath: main.yaml
+  ansibleVarFiles: |
+    deploy_rhelai_private_key_file: ~/rhel-ai.pem
+    model_tests_enabled: false
+    pci_devices:
+      10de:20f1: 1
+  computeSSHKeySecretName: rhelai-vm-secret-key
+  containerImage: quay.io/podified-master-centos9/openstack-ansible-tests:current-podified
+  debug: false
+  openStackConfigMap: openstack-config
+  openStackConfigSecret: openstack-config-secret
+  privileged: true
+  resources: {}
+  storageClass: crc-csi-hostpath-provisioner
+  # The rhelai-vm-secret-key secret was generated using the following command (notice the name of the field which stores
+  # the privatekey -> ssh-privatekey):
+  # oc create secret generic rhelai-vm-secret-key --from-file=ssh-privatekey=/home/stack/.ssh/rhel-ai.pem
+  workloadSSHKeySecretName: rhelai-vm-secret-key

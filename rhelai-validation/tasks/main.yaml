@@ -1,0 +1,13 @@
+---
+- name: Setup
+  become: true
+  ansible.builtin.import_tasks: setup.yaml
+- name: Check GPUs
+  ansible.builtin.import_tasks: gpus.yaml
+- name: Check NVIDIA
+  ansible.builtin.import_tasks: nvidia.yaml
+- name: Check iLab
+  ansible.builtin.import_tasks: ilab.yaml
+- name: Cleanup
+  become: true
+  ansible.builtin.import_tasks: cleanup.yaml

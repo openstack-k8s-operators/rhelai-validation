@@ -1,0 +1,24 @@
+---
+- name: RHEL AI VM setup
+  hosts: control_node
+  gather_facts: false
+  tasks:
+    - name: VM Pre-tasks
+      ansible.builtin.include_role:
+        name: rhelai-validation
+        tasks_from: vm_pre.yaml
+
+- name: RHEL AI Validation
+  hosts: target_nodes
+  gather_facts: false
+  roles:
+    - rhelai-validation
+
+- name: RHEL AI VM cleanup
+  hosts: control_node
+  gather_facts: false
+  tasks:
+    - name: VM Post-tasks
+      ansible.builtin.include_role:
+        name: rhelai-validation
+        tasks_from: vm_post.yaml
