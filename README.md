@@ -23,7 +23,7 @@ Once the RHOSO + RHEL AI setup is complete, do the following:
     ```
 1. Run it (requires ansible-core>=2.15)
     ```
-    ansible-playbook -i inventory main.yaml -e @vars.yaml -e @creds.yaml -e '{"pci_devices":{"10de:20f1": 1}}'
+    JUNIT_OUTPUT_DIR=./ ansible-playbook -i inventory main.yaml -e @vars.yaml -e @creds.yaml -e '{"pci_devices":{"10de:20f1": 1}}'
     ```
 
 ## Running w/ test-operator

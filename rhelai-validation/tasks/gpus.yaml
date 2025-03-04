@@ -4,7 +4,7 @@
   register: lspci_output
   changed_when: false
 
-- name: Check each PCI device
+- name: "TEST Check if GPUs in Passthrough mode are present in RHEL AI VM"
   ansible.builtin.shell: |
     set -o pipefail
     echo "{{ lspci_output.stdout }}" | grep '{{ item.key }}' | wc -l
