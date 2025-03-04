@@ -5,13 +5,6 @@
   when: found_nvidia | default(false)
   changed_when: false
 
-- name: Fail if no NVIDIA GPUs are present in nvidia-smi
-  ansible.builtin.fail:
-    msg: No NVIDIA GPUs found in nvidia-smi command!
-  when:
-    - found_nvidia | default(false)
-    - nvidia_gpu_count.stdout|int <= 0
-
 - name: Get some statistics about the NVIDIA GPU
   ansible.builtin.command: nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.free,temperature.gpu --format=csv,nounits,noheader
   register: nvidia_smi_output

@@ -1,0 +1,10 @@
+---
+- name: Run lspci command and save output
+  ansible.builtin.command: lspci -nn
+  register: lspci_output
+  changed_when: false
+
+- name: Set found_nvidia to true if NVIDIA is found
+  ansible.builtin.set_fact:
+    found_nvidia: true
+  when: lspci_output.stdout is search("NVIDIA")

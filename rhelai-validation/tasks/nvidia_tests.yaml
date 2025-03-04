@@ -1,0 +1,7 @@
+---
+- name: "TEST Check if GPUs in Passthrough mode are present in RHEL AI VM (nvidia-smi)"
+  ansible.builtin.assert:
+    that: nvidia_gpu_count.stdout|int > 0
+    fail_msg: No NVIDIA GPUs found in nvidia-smi command!
+  when:
+    - found_nvidia | default(false)

@@ -5,7 +5,7 @@
   failed_when: ilab_sys_info_result.rc != 0
   changed_when: false
 
-- name: TEST Check if dummy workload (running a workload which utilizes GPUs) is working
+- name: Run the iLab Sanity Check
   ansible.builtin.command: /tmp/scripts/run_ilab_sanity_check.sh
   register: ilab_sanity_result
   failed_when: ilab_sanity_result.rc != 0

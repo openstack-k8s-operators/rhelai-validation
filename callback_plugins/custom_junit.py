@@ -28,7 +28,7 @@ class CallbackModule(JunitCallbackModule):
         tc = super()._build_test_case(task_data, host_data)
 
         tc.name = self.mutate_task_name(tc.name)
-        # tc.system_out = None
-        # tc.system_err = None
+        tc.system_out = None
+        tc.system_err = None
         tc.classname = 'rhoso_rhelai_validation.' + re.sub(r'\.yaml:[0-9]+$', '', os.path.basename(task_data.path))
         return tc
