@@ -2,15 +2,15 @@
 - name: Setup
   become: true
   ansible.builtin.import_tasks: setup.yaml
-- name: Prep GPUs
-  ansible.builtin.import_tasks: gpus_prep.yaml
-- name: Test GPUs  # noqa: ignore-errors
-  ansible.builtin.import_tasks: gpus_tests.yaml
+- name: Check GPUs
+  ansible.builtin.import_tasks: gpus.yaml
+- name: GPUs Assertions  # noqa: ignore-errors
+  ansible.builtin.import_tasks: gpus_assertions.yaml
   ignore_errors: true
-- name: Prep NVIDIA
-  ansible.builtin.import_tasks: nvidia_prep.yaml
-- name: Test NVIDIA  # noqa: ignore-errors
-  ansible.builtin.import_tasks: nvidia_tests.yaml
+- name: Check NVIDIA
+  ansible.builtin.import_tasks: nvidia.yaml
+- name: NVIDIA Assertions  # noqa: ignore-errors
+  ansible.builtin.import_tasks: nvidia_assertions.yaml
   ignore_errors: true
 - name: Check iLab
   ansible.builtin.import_tasks: ilab.yaml
