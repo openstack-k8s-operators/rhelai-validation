@@ -4,19 +4,23 @@ deploy_rhelai_enabled: true
 # [string] Name of the VM to create and destroy
 deploy_rhelai_vm_name: rhel-ai
 # [string] Image to use when creating the VM
-deploy_rhelai_image_name: rhel-ai
+deploy_rhelai_image: rhel-ai
 # [string] Flavor to use when creating the VM
 deploy_rhelai_flavor: nvidia
+# [string] Keypair to use when creating the VM
+deploy_rhelai_key_name: rhel-ai
+# [string] Network to use when creating the VM
+deploy_rhelai_net_name: private
+# [string] Network to use when creating the VM
+deploy_rhelai_security_group: basic
 # [string] Floating IP to assign to the VM
 deploy_rhelai_floating_ip: 192.168.122.222
 # [string] WARNING Where to (over-)write the ssh key. Must match path in inventory
-deploy_rhelai_private_key_file: ~/.ssh/rhel-ai.pem
+deploy_rhelai_private_key_file: ~/test_keypair.key
 # [bool] Whether to clean up the VM before running tests
 deploy_rhelai_pre_cleanup_enabled: true
 # [bool] Whether to clean up the VM after running tests
 deploy_rhelai_post_cleanup_enabled: false
-# [string] Set to "openstack" if it's available locally
-deploy_rhelai_openstack_command: openstack
 
 # [string] DNS server to inject into /etc/resolv.conf
 dns_server: 192.168.122.1

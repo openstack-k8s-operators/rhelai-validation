@@ -1,3 +1,2 @@
 ---
-# For when you have `oc` access to RHOSO, but no working `openstack` client installed
-deploy_rhelai_openstack_command: oc rsh openstackclient openstack
+deploy_rhelai_private_key_file: ~/.ssh/rhel-ai.pem

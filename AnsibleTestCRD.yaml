@@ -11,11 +11,10 @@ spec:
     [control_node]
     localhost ansible_connection=local
     [target_nodes]
-    rhelai0 ansible_host=192.168.122.222 ansible_user=cloud-user ansible_ssh_private_key_file=~/rhel-ai.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+    rhelai0 ansible_host=192.168.122.222 ansible_user=cloud-user ansible_ssh_private_key_file=~/test_keypair.key ansible_ssh_common_args='-o StrictHostKeyChecking=no'
   # yamllint enable rule:line-length
   ansiblePlaybookPath: main.yaml
   ansibleVarFiles: |
-    deploy_rhelai_private_key_file: ~/rhel-ai.pem
     model_tests_enabled: false
     pci_devices:
       10de:20f1: 1
