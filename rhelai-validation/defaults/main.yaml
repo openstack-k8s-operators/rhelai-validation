@@ -21,6 +21,8 @@ deploy_rhelai_private_key_file: ~/test_keypair.key
 deploy_rhelai_pre_cleanup_enabled: true
 # [bool] Whether to clean up the VM after running tests
 deploy_rhelai_post_cleanup_enabled: false
+# [string] Where to find RHOSO certificates for openstack.cloud modules
+deploy_rhelai_ca_cert_path: /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
 # [string] DNS server to inject into /etc/resolv.conf
 dns_server: 192.168.122.1

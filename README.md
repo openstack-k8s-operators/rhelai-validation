@@ -20,8 +20,9 @@ Once the RHOSO + RHEL AI setup is complete, do the following:
 1. Set up and test your access to RHOSO
     ```
     oc cp openstackclient:.config/openstack/ ~/.config/openstack
+    oc cp openstackclient:/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem ./tls-ca-bundle.pem
     export OS_CLOUD=default
-    openstack --insecure flavor list
+    openstack --os-cacert ./tls-ca-bundle.pem flavor list
     ```
 1. Install Ansible dependencies
     ```

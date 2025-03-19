@@ -12,7 +12,7 @@
       - "{{ deploy_rhelai_floating_ip }}"
     security_groups:
       - "{{ deploy_rhelai_security_group }}"
-    validate_certs: false
+    ca_cert: "{{ deploy_rhelai_ca_cert_path }}"
 
 - name: Poll for SSH to be available on {{ deploy_rhelai_vm_name }}
   ansible.builtin.command: |

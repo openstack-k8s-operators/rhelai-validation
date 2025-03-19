@@ -18,13 +18,13 @@
       openstack.cloud.keypair:
         name: "{{ deploy_rhelai_key_name }}"
         state: absent
-        validate_certs: false
+        ca_cert: "{{ deploy_rhelai_ca_cert_path }}"
     - name: Create openstack keypair from supplied key
       openstack.cloud.keypair:
         name: "{{ deploy_rhelai_key_name }}"
         public_key: "{{ keygen_result.stdout }}"
         state: replace
-        validate_certs: false
+        ca_cert: "{{ deploy_rhelai_ca_cert_path }}"
 
 - name: Create new SSH key
   when: not privkey_stat_result.stat.exists
@@ -34,12 +34,12 @@
       openstack.cloud.keypair:
         name: "{{ deploy_rhelai_key_name }}"
         state: absent
-        validate_certs: false
+        ca_cert: "{{ deploy_rhelai_ca_cert_path }}"
     - name: Create new openstack keypair
       openstack.cloud.keypair:
         name: "{{ deploy_rhelai_key_name }}"
         state: replace
-        validate_certs: false
+        ca_cert: "{{ deploy_rhelai_ca_cert_path }}"
       register: keypair_result
 
     - name: Write new ssh private key to file

@@ -1,2 +1,3 @@
 ---
 deploy_rhelai_private_key_file: ~/.ssh/rhel-ai.pem
+deploy_rhelai_ca_cert_path: ./tls-ca-bundle.pem

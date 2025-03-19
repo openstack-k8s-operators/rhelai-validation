@@ -1,2 +1,4 @@
 .venv
 *.pyc
+tls-ca-bundle.pem
+creds.yaml

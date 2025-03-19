@@ -3,4 +3,4 @@
   openstack.cloud.server:
     name: "{{ deploy_rhelai_vm_name }}"
     state: absent
-    validate_certs: false
+    ca_cert: "{{ deploy_rhelai_ca_cert_path }}"
